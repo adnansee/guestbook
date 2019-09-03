@@ -52,5 +52,16 @@ public class GuestBookDao {
             e.printStackTrace();
         }
     }
+
+    public void deleteGuestBookItem(String entererdName) {
+
+        try {
+            var p = c.prepareStatement("DELETE FROM GuestBook WHERE Name = ?");
+            p.setString(1, entererdName);
+            p.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

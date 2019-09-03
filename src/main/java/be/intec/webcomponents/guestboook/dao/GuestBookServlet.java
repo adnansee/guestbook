@@ -52,25 +52,32 @@ public class GuestBookServlet extends HttpServlet {
 
             out.println("<table>  <tr>    <td>");
             guestBookDao.getGuestBookItems().forEach(g -> {
-                        out.println(" <tr>\n   <td>");
-                        out.print(g.getData() + "     ");
-                        out.print(g.getName() + "     ");
-                        out.print(g.getMessage());
-                        out.println("</td>    <td>Doe</td>  </tr>");});
-                    out.println("</table>");
+                out.println(" <tr>\n   <td>");
+                out.print(g.getData() + "     ");
+                out.print(g.getName() + "     ");
+                out.print(g.getMessage());
+                out.println("</td>    <td>Doe</td>  </tr>");
+            });
+            out.println("</table>");
+            out.println("ENTERING SECTION");
+            out.println(" <form method = 'post' action =''>" +
+                    "  name:<br>" +
+                    "  <input type='text' name='name'><br>" +
+                    "  message:<br>" +
+                    "  <input type='text' name='message'>" +
+                    "<input type='submit' name='enter'>" +
+                    "</form> ");
 
-                    out.println(" <form method = 'post' action =''>" +
-                            "  name:<br>" +
-                            "  <input type='text' name='name'><br>" +
-                            "  message:<br>" +
-                            "  <input type='text' name='message'>" +
-                            "<input type='submit' name='enter'>" +
-                            "</form> ");
+
+            out.println("DELETE SECTION");
+           out.println("<textarea name= 'deleteText'>Enter name to delete</textarea>" );
 
 
 
 
-            out.println(" ");
+
+
+
             /*Footer begin*/
             out.println("<footer>");
             out.println("<p>");
@@ -90,16 +97,21 @@ public class GuestBookServlet extends HttpServlet {
     }
 
 
-
-
-@Override
-protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
         String message = req.getParameter("message");
-        guestBookDao.addGuestBookItem(name,message);
-        doGet(req,resp);
+        guestBookDao.addGuestBookItem(name, message);
+        doGet(req, resp);
 
 
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        guestBookDao.deleteGuestBookItem(name);
+        doGet(req, resp);
     }
 }
